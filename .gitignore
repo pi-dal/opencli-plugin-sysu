@@ -30,3 +30,8 @@ npm-debug.log*
 
 # Temporary plugin runtime validation
 .opencli-runtime/
+
+# Compiled JS outputs (from esbuild/typescript)
+*.js
+!scripts/*.mjs
+!scripts/*.js
