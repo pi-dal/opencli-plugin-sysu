@@ -5,7 +5,9 @@ const PLUGIN_COMMAND_SOURCE_FILES = [
   'sysu-jwxt-classroom-schedule-detail.ts',
   'sysu-lms-dashboard.ts',
   'sysu-lms-course.ts',
-  'sysu-lms-resource.ts'
+  'sysu-lms-resource.ts',
+  'sysu-library-databases.ts',
+  'sysu-library-catalog.ts'
 ] as const
 
 export function getPluginCommandSourceFiles(): string[] {

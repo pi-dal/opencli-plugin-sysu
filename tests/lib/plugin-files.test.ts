@@ -6,7 +6,7 @@ import {
 } from '../../src/lib/plugin-files'
 
 describe('plugin runtime file selection', () => {
-  it('treats the seven command adapters as plugin runtime sources', () => {
+  it('treats all command adapters as plugin runtime sources', () => {
     expect(getPluginCommandSourceFiles()).toEqual([
       'sysu-jwxt-courses.ts',
       'sysu-jwxt-classrooms.ts',
@@ -14,7 +14,9 @@ describe('plugin runtime file selection', () => {
       'sysu-jwxt-classroom-schedule-detail.ts',
       'sysu-lms-dashboard.ts',
       'sysu-lms-course.ts',
-      'sysu-lms-resource.ts'
+      'sysu-lms-resource.ts',
+      'sysu-library-databases.ts',
+      'sysu-library-catalog.ts'
     ])
   })
 
@@ -47,6 +49,14 @@ describe('plugin runtime file selection', () => {
       {
         input: 'sysu-lms-resource.ts',
         output: 'sysu-lms-resource.js'
+      },
+      {
+        input: 'sysu-library-databases.ts',
+        output: 'sysu-library-databases.js'
+      },
+      {
+        input: 'sysu-library-catalog.ts',
+        output: 'sysu-library-catalog.js'
       }
     ])
   })
