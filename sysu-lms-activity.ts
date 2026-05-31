@@ -9,18 +9,15 @@ import {
 cli({
   site: 'sysu',
   name: 'lms-activity',
-  description: 'SYSU Moodle activity detail — view assignment/quiz/forum/resource details',
+  description: 'SYSU Moodle activity detail — view assignment/quiz/forum/resource details by activity URL',
   domain: LMS_DOMAIN,
   strategy: Strategy.COOKIE,
   browser: true,
   args: [
-    { name: 'url-or-id', positional: true, required: true, help: 'Activity page URL or numeric activity ID' }
+    { name: 'url', positional: true, required: true, help: 'Full activity page URL (e.g. /mod/assign/view.php?id=42 or /mod/quiz/view.php?id=42)' }
   ],
   func: async (page: any, kwargs: any) => {
-    const input = String(kwargs.urlOrId)
-    const activityUrl = input.startsWith('http://') || input.startsWith('https://')
-      ? input
-      : `https://${LMS_DOMAIN}/mod/fsresource/view.php?id=${input}`
+    const activityUrl = String(kwargs.url)
 
     await page.goto(activityUrl)
     await page.evaluate(waitForContent())

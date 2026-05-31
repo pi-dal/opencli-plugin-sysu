@@ -28,7 +28,7 @@ describe('sysu lms-activity', () => {
     expect(config.strategy).toBe('cookie')
     expect(config.browser).toBe(true)
     expect(config.args).toEqual([
-      expect.objectContaining({ name: 'url-or-id', positional: true, required: true })
+      expect.objectContaining({ name: 'url', positional: true, required: true })
     ])
   })
 
@@ -48,7 +48,7 @@ describe('sysu lms-activity', () => {
       evaluate: vi.fn(async () => mockActivity)
     }
 
-    const result = await config.func(page, { urlOrId: '42' })
+    const result = await config.func(page, { url: 'https://lms.sysu.edu.cn/mod/assign/view.php?id=42' })
 
     expect(page.goto).toHaveBeenCalled()
     expect(result.name).toBe('Week 1 Assignment')
