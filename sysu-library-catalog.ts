@@ -13,7 +13,6 @@ cli({
   name: 'library-catalog',
   description: 'SYSU Library catalog search — search print/electronic collections',
   access: 'read',
-  defaultFormat: 'plain',
   domain: LIBRARY_DOMAIN,
   strategy: Strategy.COOKIE,
   browser: true,

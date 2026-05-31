@@ -22,7 +22,6 @@ cli({
   name: 'lms-resource',
   description: 'SYSU Moodle resource — extract file/video/page details',
   access: 'read',
-  defaultFormat: 'plain',
   domain: LMS_DOMAIN,
   strategy: Strategy.COOKIE,
   browser: true,

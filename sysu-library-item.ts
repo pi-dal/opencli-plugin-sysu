@@ -13,7 +13,6 @@ cli({
   name: 'library-item',
   description: 'SYSU Library catalog item detail — view full record metadata from INNOPAC',
   access: 'read',
-  defaultFormat: 'plain',
   domain: LIBRARY_DOMAIN,
   strategy: Strategy.COOKIE,
   browser: true,

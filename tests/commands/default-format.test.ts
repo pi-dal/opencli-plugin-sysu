@@ -30,7 +30,7 @@ describe('sysu command output defaults', () => {
     vi.resetModules()
   })
 
-  it('registers every sysu command with plain as the default format', async () => {
+  it('registers every sysu command without overriding default format (CLI default is table)', async () => {
     for (const modulePath of COMMAND_MODULES) {
       await import(modulePath)
     }
@@ -40,18 +40,18 @@ describe('sysu command output defaults', () => {
     const configs = cliMock.mock.calls.map(([config]) => config)
 
     expect(configs.map(config => [config.site, config.name, config.defaultFormat])).toEqual([
-      ['sysu', 'jwxt-courses', 'plain'],
-      ['sysu', 'jwxt-classrooms', 'plain'],
-      ['sysu', 'jwxt-classroom-occupy-detail', 'plain'],
-      ['sysu', 'jwxt-classroom-schedule-detail', 'plain'],
-      ['sysu', 'lms-dashboard', 'plain'],
-      ['sysu', 'lms-course', 'plain'],
-      ['sysu', 'lms-resource', 'plain'],
-      ['sysu', 'lms-activity', 'plain'],
-      ['sysu', 'library-databases', 'plain'],
-      ['sysu', 'library-catalog', 'plain'],
-      ['sysu', 'library-search', 'plain'],
-      ['sysu', 'library-item', 'plain']
+      ['sysu', 'jwxt-courses', undefined],
+      ['sysu', 'jwxt-classrooms', undefined],
+      ['sysu', 'jwxt-classroom-occupy-detail', undefined],
+      ['sysu', 'jwxt-classroom-schedule-detail', undefined],
+      ['sysu', 'lms-dashboard', undefined],
+      ['sysu', 'lms-course', undefined],
+      ['sysu', 'lms-resource', undefined],
+      ['sysu', 'lms-activity', undefined],
+      ['sysu', 'library-databases', undefined],
+      ['sysu', 'library-catalog', undefined],
+      ['sysu', 'library-search', undefined],
+      ['sysu', 'library-item', undefined]
     ])
   })
 })
