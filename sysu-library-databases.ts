@@ -17,8 +17,7 @@ cli({
   strategy: Strategy.COOKIE,
   browser: true,
   args: [
-    { name: 'keyword', help: 'Filter databases by keyword' },
-    { name: 'type', help: 'Document type filter: ebook, ejournal, dissertation, newspaper, trial' }
+    { name: 'keyword', help: 'Filter databases by keyword' }
   ],
   func: async (page: any, kwargs: any) => {
     await page.evaluate(waitForLibraryContent())
