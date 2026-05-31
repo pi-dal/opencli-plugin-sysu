@@ -1,8 +1,11 @@
 const PLUGIN_COMMAND_SOURCE_FILES = [
-  'courses.ts',
-  'classrooms.ts',
-  'classroom-occupy-detail.ts',
-  'classroom-schedule-detail.ts'
+  'sysu-jwxt-courses.ts',
+  'sysu-jwxt-classrooms.ts',
+  'sysu-jwxt-classroom-occupy-detail.ts',
+  'sysu-jwxt-classroom-schedule-detail.ts',
+  'sysu-lms-dashboard.ts',
+  'sysu-lms-course.ts',
+  'sysu-lms-resource.ts'
 ] as const
 
 export function getPluginCommandSourceFiles(): string[] {

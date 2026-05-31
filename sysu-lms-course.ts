@@ -1,0 +1,28 @@
+import { Strategy, cli } from '@jackwener/opencli/registry'
+
+import {
+  LMS_DOMAIN,
+  extractSectionsScript,
+  waitForContent,
+  type MoodleSection
+} from './src/lib/sysu-lms'
+
+cli({
+  site: 'sysu',
+  name: 'lms-course',
+  description: 'SYSU Moodle course — list sections and activities',
+  domain: LMS_DOMAIN,
+  strategy: Strategy.COOKIE,
+  browser: true,
+  args: [
+    { name: 'id', positional: true, required: true, help: 'Moodle course ID' }
+  ],
+  func: async (page: any, kwargs: any) => {
+    const courseId = String(kwargs.id)
+    const courseUrl = `https://${LMS_DOMAIN}/course/view.php?id=${courseId}`
+    await page.goto(courseUrl)
+    await page.evaluate(waitForContent())
+    const sections: MoodleSection[] = await page.evaluate(extractSectionsScript())
+    return sections
+  }
+})

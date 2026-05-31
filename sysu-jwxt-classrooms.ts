@@ -25,7 +25,7 @@ function extractClassroomRows(response: any): Array<Record<string, unknown>> {
 
 cli({
   site: 'sysu',
-  name: 'classrooms',
+  name: 'jwxt-classrooms',
   description: 'SYSU classroom occupancy query',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.classrooms,

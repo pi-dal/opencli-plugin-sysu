@@ -11,7 +11,7 @@ import { normalizeScheduleDetail } from './src/lib/normalize'
 
 cli({
   site: 'sysu',
-  name: 'classroom-schedule-detail',
+  name: 'jwxt-classroom-schedule-detail',
   description: 'SYSU classroom schedule detail',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.classrooms,

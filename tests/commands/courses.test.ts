@@ -16,14 +16,14 @@ describe('courses command', () => {
   })
 
   it('registers the sysu courses command with cookie strategy', async () => {
-    await import('../../courses.ts')
+    await import('../../sysu-jwxt-courses.ts')
 
     expect(cliMock).toHaveBeenCalledTimes(1)
 
     const config = cliMock.mock.calls[0][0]
 
     expect(config.site).toBe('sysu')
-    expect(config.name).toBe('courses')
+    expect(config.name).toBe('jwxt-courses')
     expect(config.description).toContain('course')
     expect(config.domain).toBe('jwxt.sysu.edu.cn')
     expect(config.navigateBefore).toContain('/openingCoursesStu')
@@ -43,7 +43,7 @@ describe('courses command', () => {
   })
 
   it('returns normalized rows by default', async () => {
-    await import('../../courses.ts')
+    await import('../../sysu-jwxt-courses.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {
@@ -92,7 +92,7 @@ describe('courses command', () => {
   })
 
   it('returns raw rows when raw mode is requested', async () => {
-    await import('../../courses.ts')
+    await import('../../sysu-jwxt-courses.ts')
 
     const config = cliMock.mock.calls[0][0]
     const rawRow = {
@@ -109,7 +109,7 @@ describe('courses command', () => {
   })
 
   it('reads rows from the real payload shape', async () => {
-    await import('../../courses.ts')
+    await import('../../sysu-jwxt-courses.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {
@@ -138,7 +138,7 @@ describe('courses command', () => {
   })
 
   it('accepts kebab-case course args from the real CLI parser', async () => {
-    await import('../../courses.ts')
+    await import('../../sysu-jwxt-courses.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {

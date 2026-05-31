@@ -16,7 +16,7 @@ describe('detail commands', () => {
   })
 
   it('registers classroom-occupy-detail and returns the raw detail payload by default', async () => {
-    await import('../../classroom-occupy-detail.ts')
+    await import('../../sysu-jwxt-classroom-occupy-detail.ts')
 
     expect(cliMock).toHaveBeenCalledTimes(1)
 
@@ -30,7 +30,7 @@ describe('detail commands', () => {
       }))
     }
 
-    expect(config.name).toBe('classroom-occupy-detail')
+    expect(config.name).toBe('jwxt-classroom-occupy-detail')
     expect(config.domain).toBe('jwxt.sysu.edu.cn')
     expect(config.navigateBefore).toContain('/classroomCheckStu')
     expect(config.args).toEqual([
@@ -49,7 +49,7 @@ describe('detail commands', () => {
   })
 
   it('registers classroom-schedule-detail and returns schedule plus studyObjects', async () => {
-    await import('../../classroom-schedule-detail.ts')
+    await import('../../sysu-jwxt-classroom-schedule-detail.ts')
 
     expect(cliMock).toHaveBeenCalledTimes(1)
 
@@ -70,7 +70,7 @@ describe('detail commands', () => {
       }))
     }
 
-    expect(config.name).toBe('classroom-schedule-detail')
+    expect(config.name).toBe('jwxt-classroom-schedule-detail')
     expect(config.domain).toBe('jwxt.sysu.edu.cn')
     expect(config.navigateBefore).toContain('/classroomCheckStu')
     expect(config.args).toEqual(
@@ -109,7 +109,7 @@ describe('detail commands', () => {
   })
 
   it('accepts kebab-case detail args from the real CLI parser', async () => {
-    await import('../../classroom-schedule-detail.ts')
+    await import('../../sysu-jwxt-classroom-schedule-detail.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {

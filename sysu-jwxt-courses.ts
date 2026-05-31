@@ -23,7 +23,7 @@ function extractCourseRows(response: any): Array<Record<string, unknown>> {
 
 cli({
   site: 'sysu',
-  name: 'courses',
+  name: 'jwxt-courses',
   description: 'SYSU course query',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.courses,

@@ -16,14 +16,14 @@ describe('classrooms command', () => {
   })
 
   it('registers the sysu classrooms command with cookie strategy', async () => {
-    await import('../../classrooms.ts')
+    await import('../../sysu-jwxt-classrooms.ts')
 
     expect(cliMock).toHaveBeenCalledTimes(1)
 
     const config = cliMock.mock.calls[0][0]
 
     expect(config.site).toBe('sysu')
-    expect(config.name).toBe('classrooms')
+    expect(config.name).toBe('jwxt-classrooms')
     expect(config.domain).toBe('jwxt.sysu.edu.cn')
     expect(config.navigateBefore).toContain('/classroomCheckStu')
     expect(config.strategy).toBe('cookie')
@@ -44,7 +44,7 @@ describe('classrooms command', () => {
   })
 
   it('returns normalized classroom rows by default', async () => {
-    await import('../../classrooms.ts')
+    await import('../../sysu-jwxt-classrooms.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {
@@ -92,7 +92,7 @@ describe('classrooms command', () => {
   })
 
   it('validates classroom args before making the browser request', async () => {
-    await import('../../classrooms.ts')
+    await import('../../sysu-jwxt-classrooms.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {
@@ -111,7 +111,7 @@ describe('classrooms command', () => {
   })
 
   it('reads rows from the real classroom payload shape', async () => {
-    await import('../../classrooms.ts')
+    await import('../../sysu-jwxt-classrooms.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {
@@ -148,7 +148,7 @@ describe('classrooms command', () => {
   })
 
   it('accepts kebab-case classroom args and normalizes weekdays', async () => {
-    await import('../../classrooms.ts')
+    await import('../../sysu-jwxt-classrooms.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {
@@ -184,7 +184,7 @@ describe('classrooms command', () => {
   })
 
   it('resolves campus, building, and classroom display values before querying classrooms', async () => {
-    await import('../../classrooms.ts')
+    await import('../../sysu-jwxt-classrooms.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {
@@ -235,7 +235,7 @@ describe('classrooms command', () => {
   })
 
   it('surfaces fetched building candidates when building lookup fails', async () => {
-    await import('../../classrooms.ts')
+    await import('../../sysu-jwxt-classrooms.ts')
 
     const config = cliMock.mock.calls[0][0]
     const page = {

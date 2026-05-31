@@ -6,32 +6,47 @@ import {
 } from '../../src/lib/plugin-files'
 
 describe('plugin runtime file selection', () => {
-  it('only treats the four command adapters as plugin runtime sources', () => {
+  it('treats the seven command adapters as plugin runtime sources', () => {
     expect(getPluginCommandSourceFiles()).toEqual([
-      'courses.ts',
-      'classrooms.ts',
-      'classroom-occupy-detail.ts',
-      'classroom-schedule-detail.ts'
+      'sysu-jwxt-courses.ts',
+      'sysu-jwxt-classrooms.ts',
+      'sysu-jwxt-classroom-occupy-detail.ts',
+      'sysu-jwxt-classroom-schedule-detail.ts',
+      'sysu-lms-dashboard.ts',
+      'sysu-lms-course.ts',
+      'sysu-lms-resource.ts'
     ])
   })
 
   it('maps runtime source files to root-level js outputs', () => {
     expect(getPluginCommandBuildEntries()).toEqual([
       {
-        input: 'courses.ts',
-        output: 'courses.js'
+        input: 'sysu-jwxt-courses.ts',
+        output: 'sysu-jwxt-courses.js'
       },
       {
-        input: 'classrooms.ts',
-        output: 'classrooms.js'
+        input: 'sysu-jwxt-classrooms.ts',
+        output: 'sysu-jwxt-classrooms.js'
       },
       {
-        input: 'classroom-occupy-detail.ts',
-        output: 'classroom-occupy-detail.js'
+        input: 'sysu-jwxt-classroom-occupy-detail.ts',
+        output: 'sysu-jwxt-classroom-occupy-detail.js'
       },
       {
-        input: 'classroom-schedule-detail.ts',
-        output: 'classroom-schedule-detail.js'
+        input: 'sysu-jwxt-classroom-schedule-detail.ts',
+        output: 'sysu-jwxt-classroom-schedule-detail.js'
+      },
+      {
+        input: 'sysu-lms-dashboard.ts',
+        output: 'sysu-lms-dashboard.js'
+      },
+      {
+        input: 'sysu-lms-course.ts',
+        output: 'sysu-lms-course.js'
+      },
+      {
+        input: 'sysu-lms-resource.ts',
+        output: 'sysu-lms-resource.js'
       }
     ])
   })

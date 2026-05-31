@@ -10,7 +10,7 @@ import { normalizeCliKwargs } from './src/lib/kwargs'
 
 cli({
   site: 'sysu',
-  name: 'classroom-occupy-detail',
+  name: 'jwxt-classroom-occupy-detail',
   description: 'SYSU classroom occupancy detail',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.classrooms,

@@ -2,5 +2,5 @@
   "name": "sysu",
   "version": "0.1.0",
   "opencli": ">=1.0.0",
-  "description": "SYSU teaching affairs queries for courses and classrooms"
+  "description": "SYSU plugin — jwxt teaching affairs queries and Moodle LMS access"
 }
