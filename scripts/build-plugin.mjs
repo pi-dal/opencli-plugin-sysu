@@ -14,7 +14,8 @@ const commandEntries = [
   ['sysu-lms-activity.ts', 'sysu-lms-activity.js'],
   ['sysu-jwxt-timetable.ts', 'sysu-jwxt-timetable.js'],
   ['sysu-jwxt-grades.ts', 'sysu-jwxt-grades.js'],
-  ['sysu-jwxt-notifications.ts', 'sysu-jwxt-notifications.js']
+  ['sysu-jwxt-notifications.ts', 'sysu-jwxt-notifications.js'],
+  ['sysu-jwxt-training-plan.ts', 'sysu-jwxt-training-plan.js']
 ]
 
 for (const [input, output] of commandEntries) {
