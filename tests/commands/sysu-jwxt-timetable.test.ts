@@ -33,20 +33,21 @@ describe('sysu jwxt-timetable', () => {
     ])
   })
 
-  it('returns timetable data from the API', async () => {
+  it('calls page evaluate and returns timetable data', { timeout: 10000 }, async () => {
     await import('../../sysu-jwxt-timetable.ts')
 
     const config = cliMock.mock.calls[0][0]
-    const timetableData = [
-      { weekday: '星期一', courses: [{ name: '概率统计', teacher: '苏宁' }] }
-    ]
     const page = {
-      evaluate: vi.fn(async () => timetableData)
+      evaluate: vi.fn(async () => [
+        { monday: '高等数学', section: 1, weekly: 13 }
+      ])
     }
 
-    const result = await config.func(page, { yearTerm: '2025-2', week: 13 })
+    const result = await config.func(page, {})
 
-    expect(page.evaluate).toHaveBeenCalled()
-    expect(result).toEqual(timetableData)
+    expect(page.evaluate).toHaveBeenCalledTimes(1)
+    const script = page.evaluate.mock.calls[0][0]
+    expect(script).toContain('XMLHttpRequest')
+    expect(result).toEqual([{ monday: '高等数学', section: 1, weekly: 13 }])
   })
 })
