@@ -18,32 +18,41 @@ cli({
     { name: 'college', help: 'College/department name' }
   ],
   func: async (page: any, _kwargs: any) => {
-    await new Promise(r => setTimeout(r, 5000))
+    await new Promise(r => setTimeout(r, 3000))
 
     const data = await page.evaluate(`
 (async () => {
   const deadline = Date.now() + 10000;
+  const seen = new Set();
+
   while (Date.now() < deadline) {
-    const table = document.querySelector('.el-table__body, table');
-    if (table && table.querySelectorAll('tr').length > 3) break;
-    await new Promise(r => setTimeout(r, 300));
-  }
+    // Try to find any table rows with data content
+    const allRows = document.querySelectorAll('.el-table__body-wrapper tr, .el-table__body tr, table tr');
+    const dataRows = Array.from(allRows).filter(function(row) {
+      const tds = row.querySelectorAll('td');
+      return tds.length >= 5 && Array.from(tds).some(function(td) { return (td.textContent || '').trim().length > 2; });
+    });
 
-  const table = document.querySelector('.el-table__body, table');
-  if (!table) return { text: (document.body.textContent || '').trim().slice(0, 300) };
+    if (dataRows.length > 0) {
+      const headers = Array.from(document.querySelectorAll('.el-table__header-wrapper th .cell, th')).map(function(h) { return (h.textContent || '').trim(); }).filter(Boolean);
 
-  const rows = table.querySelectorAll('tr');
-  const result = [];
-  for (const row of rows) {
-    const cells = row.querySelectorAll('td, th');
-    const rowData = [];
-    for (const cell of cells) {
-      const text = cell.textContent?.trim() || '';
-      if (text) rowData.push(text);
+      const rows = dataRows.map(function(row) {
+        const cells = row.querySelectorAll('td');
+        return Array.from(cells).map(function(c) { return (c.textContent || '').trim(); });
+      }).filter(function(r) { return r.length >= 5; });
+
+      if (rows.length > 0) return { headers: headers.length > 0 ? headers : [], rows: rows.slice(0, 100), total: rows.length };
     }
-    if (rowData.length > 0) result.push(rowData);
+
+    // Check raw text for data patterns
+    const text = document.body.textContent || '';
+    const entries = text.match(/\d+\u5e74\u4e2d\u5c71\u5927\u5b66/g);
+    if (entries && entries.length > 0) break;
+
+    await new Promise(function(r) { setTimeout(r, 300); });
   }
-  return result.length > 0 ? result : { text: (document.body.textContent || '').trim().slice(0, 300) };
+
+  return { text: (document.body.textContent || '').trim().slice(0, 1000) };
 })()
     `)
     return data
