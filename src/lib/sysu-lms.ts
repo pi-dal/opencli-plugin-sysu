@@ -78,36 +78,27 @@ export function waitForContent(): string {
  */
 export function extractCoursesScript(): string {
   return wrapBrowserScript(`
-const cards = document.querySelectorAll('.card .card-body, .coursebox .info, .dashboard-card');
-if (cards.length === 0) {
-  // fallback: look for any course link matching /course/view.php
-  const links = document.querySelectorAll('a[href*="/course/view.php"]');
-  const seen = new Set();
-  return Array.from(links)
-    .filter(a => {
-      const href = a.getAttribute('href') || '';
-      const id = href.match(/id=(\\d+)/)?.[1];
-      if (!id || seen.has(id)) return false;
-      seen.add(id);
-      return true;
-    })
-    .map(a => ({
-      id: a.href.match(/id=(\\d+)/)?.[1] || '',
+const seen = new Set();
+
+// Find all course links that have a numeric course id
+const links = document.querySelectorAll('a[href*="course/view.php"]');
+return Array.from(links)
+  .filter(a => {
+    const href = a.getAttribute('href') || '';
+    const id = href.match(/id=(\\d+)/)?.[1];
+    if (!id || seen.has(id)) return false;
+    seen.add(id);
+    return true;
+  })
+  .map(a => {
+    const href = a.getAttribute('href') || '';
+    return {
+      id: href.match(/id=(\\d+)/)?.[1] || '',
       name: (a.textContent || '').trim(),
-      url: a.href
-    }));
-}
-return Array.from(cards).map(card => {
-  const link = card.querySelector('a');
-  const anchor = link || card.querySelector('a[href*="/course/view.php"]');
-  const href = anchor?.getAttribute('href') || '';
-  return {
-    id: href.match(/id=(\\d+)/)?.[1] || '',
-    name: (anchor?.textContent || card.textContent || '').trim().split('\\n')[0].trim(),
-    url: href,
-    summary: card.querySelector('.card-subtitle, .summary, .card-body p')?.textContent?.trim() || undefined
-  };
-});
+      url: href
+    };
+  })
+  .filter(c => c.id);
 `)
 }
 

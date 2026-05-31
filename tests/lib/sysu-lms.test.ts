@@ -50,26 +50,25 @@ describe('runtime script shape', () => {
 })
 
 describe('extractCoursesScript', () => {
-  it('returns executable JS string that extracts course cards', () => {
+  it('returns executable JS that finds enrolled courses via course/view.php links', () => {
     const script = extractCoursesScript()
-    expect(script).toContain('.card .card-body')
-    expect(script).toContain('.coursebox .info')
-    expect(script).toContain('dashboard-card')
     expect(script).toContain('course/view.php')
     expect(script).toContain('id:')
     expect(script).toContain('name:')
     expect(script).toContain('url:')
   })
 
-  it('includes optional summary extraction', () => {
-    const script = extractCoursesScript()
-    expect(script).toContain('summary')
-  })
-
-  it('deduplicates by course id', () => {
+  it('deduplicates by course id and rejects entries without a valid course ID', () => {
     const script = extractCoursesScript()
     expect(script).toContain('seen')
     expect(script).toContain('has(id)')
+    expect(script).toContain('.filter(c => c.id)')
+  })
+
+  it('only treats course/view.php links as dashboard course entries', () => {
+    const script = extractCoursesScript()
+    expect(script).toContain('querySelectorAll(\'a[href*="course/view.php"]\')')
+    expect(script).not.toContain("querySelector('a')")
   })
 })
 
