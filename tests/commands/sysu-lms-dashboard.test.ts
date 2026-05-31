@@ -39,13 +39,37 @@ describe('sysu-lms dashboard', () => {
       { id: '456', name: 'Course B', url: 'https://lms.sysu.edu.cn/course/view.php?id=456' }
     ]
     const page = {
-      evaluate: vi.fn(async () => mockCourses)
+      evaluate: vi
+        .fn()
+        .mockResolvedValueOnce(true)
+        .mockResolvedValueOnce(mockCourses)
     }
 
     const result = await config.func(page, {})
 
-    expect(page.evaluate).toHaveBeenCalled()
+    expect(page.evaluate).toHaveBeenCalledTimes(2)
     expect(result).toEqual(mockCourses)
+  })
+
+  it('falls back to DOM extraction when the dashboard ajax returns no courses', async () => {
+    await import('../../sysu-lms-dashboard.ts')
+
+    const config = cliMock.mock.calls[0][0]
+    const domCourses = [
+      { id: '789', name: 'Course C', url: 'https://lms.sysu.edu.cn/course/view.php?id=789' }
+    ]
+    const page = {
+      evaluate: vi
+        .fn()
+        .mockResolvedValueOnce(true)
+        .mockResolvedValueOnce([])
+        .mockResolvedValueOnce(domCourses)
+    }
+
+    const result = await config.func(page, {})
+
+    expect(page.evaluate).toHaveBeenCalledTimes(3)
+    expect(result).toEqual(domCourses)
   })
 
   it('navigates to /my/ for dashboard', () => {

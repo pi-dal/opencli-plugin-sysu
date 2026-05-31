@@ -25,6 +25,7 @@ cli({
   site: 'sysu',
   name: 'jwxt-courses',
   description: 'SYSU course query',
+  defaultFormat: 'plain',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.courses,
   strategy: Strategy.COOKIE,

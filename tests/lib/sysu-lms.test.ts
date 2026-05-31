@@ -6,6 +6,8 @@ import {
   LMS_DOMAIN,
   LMS_NAVIGATE_URLS,
   waitForContent,
+  waitForDashboardCourses,
+  fetchDashboardCoursesScript,
   extractCoursesScript,
   extractCourseNameScript,
   extractSectionsScript,
@@ -22,6 +24,7 @@ describe('LMS_DOMAIN', () => {
 describe('LMS_NAVIGATE_URLS', () => {
   it('has a dashboard URL', () => {
     expect(LMS_NAVIGATE_URLS.dashboard).toMatch(/^https:\/\/lms\.sysu\.edu\.cn\/my\//)
+    expect(LMS_NAVIGATE_URLS.dashboard).toContain('myoverviewtab=courses')
   })
 })
 
@@ -31,6 +34,28 @@ describe('waitForContent', () => {
     expect(script).toContain('async')
     expect(script).toContain('region-main')
     expect(script).toContain('[role="main"]')
+    expect(script).toContain('data-block="myoverview"')
+    expect(script).toContain('a[href*="course/view.php"]')
+  })
+})
+
+describe('waitForDashboardCourses', () => {
+  it('waits specifically for myoverview course links instead of generic page shell', () => {
+    const script = waitForDashboardCourses()
+    expect(script).toContain('data-block="myoverview"')
+    expect(script).toContain('.block_myoverview')
+    expect(script).toContain('globalThis.M?.cfg?.sesskey')
+    expect(script).not.toContain('#region-main')
+  })
+})
+
+describe('fetchDashboardCoursesScript', () => {
+  it('targets Moodle core webservice API for enrolled courses', () => {
+    const script = fetchDashboardCoursesScript()
+    expect(script).toContain('core_course_get_enrolled_courses_by_timeline_classification')
+    expect(script).toContain('/lib/ajax/service.php?sesskey=')
+    expect(script).toContain("const classifications = ['inprogress', 'all', 'current', 'future', 'past']")
+    expect(script).toContain("sort: 'shortname'")
   })
 })
 
@@ -38,6 +63,7 @@ describe('runtime script shape', () => {
   it('emits page.evaluate scripts that compile as standalone browser scripts', () => {
     const scripts = [
       waitForContent(),
+      fetchDashboardCoursesScript(),
       extractCoursesScript(),
       extractSectionsScript(),
       extractResourceScript()
@@ -50,11 +76,12 @@ describe('runtime script shape', () => {
 })
 
 describe('extractCoursesScript', () => {
-  it('returns executable JS that finds enrolled courses via course/view.php links', () => {
+  it('polls for course links in the myoverview block', () => {
     const script = extractCoursesScript()
     expect(script).toContain('course/view.php')
+    expect(script).toContain('data-block="myoverview"')
+    expect(script).toContain('data-region="course-view-content"')
     expect(script).toContain('id:')
-    expect(script).toContain('name:')
     expect(script).toContain('url:')
   })
 
@@ -62,12 +89,12 @@ describe('extractCoursesScript', () => {
     const script = extractCoursesScript()
     expect(script).toContain('seen')
     expect(script).toContain('has(id)')
-    expect(script).toContain('.filter(c => c.id)')
   })
 
   it('only treats course/view.php links as dashboard course entries', () => {
     const script = extractCoursesScript()
-    expect(script).toContain('querySelectorAll(\'a[href*="course/view.php"]\')')
+    expect(script).toContain('data-block="myoverview"')
+    expect(script).toContain("querySelectorAll('a[href*=\"course/view.php?id=\"]')")
     expect(script).not.toContain("querySelector('a')")
   })
 })
@@ -149,7 +176,6 @@ describe('extractActivityDetailScript', () => {
     expect(script).toContain('modtype_fsresource')
     expect(script).toContain('description')
     expect(script).toContain('pluginfile.php')
-    // no assignment/quiz-specific sub-objects
     expect(script).not.toContain('submission')
     expect(script).not.toContain('dueDate')
   })

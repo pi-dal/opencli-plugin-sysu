@@ -12,6 +12,7 @@ cli({
   site: 'sysu',
   name: 'library-catalog',
   description: 'SYSU Library catalog search — search print/electronic collections',
+  defaultFormat: 'plain',
   domain: LIBRARY_DOMAIN,
   strategy: Strategy.COOKIE,
   browser: true,

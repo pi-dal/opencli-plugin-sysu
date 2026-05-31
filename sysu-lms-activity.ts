@@ -10,6 +10,7 @@ cli({
   site: 'sysu',
   name: 'lms-activity',
   description: 'SYSU Moodle activity detail — view assignment/quiz/forum/resource details by activity URL',
+  defaultFormat: 'plain',
   domain: LMS_DOMAIN,
   strategy: Strategy.COOKIE,
   browser: true,

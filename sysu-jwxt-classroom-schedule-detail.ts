@@ -13,6 +13,7 @@ cli({
   site: 'sysu',
   name: 'jwxt-classroom-schedule-detail',
   description: 'SYSU classroom schedule detail',
+  defaultFormat: 'plain',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.classrooms,
   strategy: Strategy.COOKIE,

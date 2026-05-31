@@ -12,6 +12,7 @@ cli({
   site: 'sysu',
   name: 'library-search',
   description: 'SYSU Library literature search — one-stop search of print and electronic resources',
+  defaultFormat: 'plain',
   domain: LIBRARY_DOMAIN,
   strategy: Strategy.COOKIE,
   browser: true,
