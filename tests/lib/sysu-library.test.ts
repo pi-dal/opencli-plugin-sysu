@@ -1,3 +1,5 @@
+import vm from 'node:vm'
+
 import { describe, expect, it } from 'vitest'
 
 import {
@@ -34,6 +36,22 @@ describe('waitForLibraryContent', () => {
     const script = waitForLibraryContent()
     expect(script).toContain('#main-content')
     expect(script).toContain('[role="main"]')
+  })
+})
+
+describe('runtime script shape', () => {
+  it('emits page.evaluate scripts that compile as standalone browser scripts', () => {
+    const scripts = [
+      waitForLibraryContent(),
+      extractDatabasesScript(),
+      extractCatalogResultsScript(),
+      extractSearchResultsScript(),
+      extractCatalogItemDetailScript()
+    ]
+
+    for (const script of scripts) {
+      expect(() => new vm.Script(script)).not.toThrow()
+    }
   })
 })
 

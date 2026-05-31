@@ -53,6 +53,14 @@ export interface CatalogSearchArgs {
   type?: 'title' | 'author' | 'subject' | 'isbn' | 'all'
 }
 
+function wrapBrowserScript(body: string): string {
+  return `
+(() => {
+${body}
+})()
+`.trim()
+}
+
 /**
  * Wait for library page content to be ready.
  */
@@ -74,7 +82,7 @@ export function waitForLibraryContent(): string {
  * Extract database listing from the library database page.
  */
 export function extractDatabasesScript(): string {
-  return `
+  return wrapBrowserScript(`
 const rows = document.querySelectorAll('.resource-item, .database-item, .search-result-item, .views-row, tr');
 const databases = [];
 const seen = new Set();
@@ -101,14 +109,14 @@ for (const row of rows) {
 }
 
 return databases.slice(0, 50);
-`.trim()
+`)
 }
 
 /**
  * Extract catalog search results from INNOPAC system.
  */
 export function extractCatalogResultsScript(): string {
-  return `
+  return wrapBrowserScript(`
 const results = [];
 const rows = document.querySelectorAll('tr, .briefcitRow, .briefcitDetail, .bibItemsEntry');
 let count = 0;
@@ -139,7 +147,7 @@ for (const row of rows) {
 }
 
 return results;
-`.trim()
+`)
 }
 
 /**
@@ -174,7 +182,7 @@ export function buildLiteratureSearchUrl(query: string): string {
  * Extract search results from the library literature search results page.
  */
 export function extractSearchResultsScript(): string {
-  return `
+  return wrapBrowserScript(`
 const cards = document.querySelectorAll('.result-item, .search-result, .gs_r, .gsc-result, .entry, article, .item, .list-item');
 const results = [];
 const seen = new Set();
@@ -203,14 +211,14 @@ for (const card of cards) {
 }
 
 return results.slice(0, 30);
-`.trim()
+`)
 }
 
 /**
  * Extract catalog item detail from an INNOPAC full record page.
  */
 export function extractCatalogItemDetailScript(): string {
-  return `
+  return wrapBrowserScript(`
 function getLabel(prefix) {
   const texts = document.body.innerText || '';
   const lines = texts.split('\\n');
@@ -253,7 +261,7 @@ return {
   ...(location ? { location } : {}),
   ...(status ? { status } : {})
 };
-`.trim()
+`)
 }
 
 /**

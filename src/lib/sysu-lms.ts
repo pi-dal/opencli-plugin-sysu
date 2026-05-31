@@ -36,14 +36,22 @@ export interface MoodleResourceInfo {
   }
 }
 
+function wrapBrowserScript(body: string): string {
+  return `
+(() => {
+${body}
+})()
+`.trim()
+}
+
 /**
  * Extract the course name from a Moodle course page heading.
  */
 export function extractCourseNameScript(): string {
-  return `
+  return wrapBrowserScript(`
 const h1 = document.querySelector('h1');
 return h1?.textContent?.trim() || document.title.replace(/\\s*\\|.*$/, '').trim() || '';
-`.trim()
+`)
 }
 
 /**
@@ -69,7 +77,7 @@ export function waitForContent(): string {
  * Dashboard lists courses as cards with title links.
  */
 export function extractCoursesScript(): string {
-  return `
+  return wrapBrowserScript(`
 const cards = document.querySelectorAll('.card .card-body, .coursebox .info, .dashboard-card');
 if (cards.length === 0) {
   // fallback: look for any course link matching /course/view.php
@@ -100,7 +108,7 @@ return Array.from(cards).map(card => {
     summary: card.querySelector('.card-subtitle, .summary, .card-body p')?.textContent?.trim() || undefined
   };
 });
-`.trim()
+`)
 }
 
 /**
@@ -108,7 +116,7 @@ return Array.from(cards).map(card => {
  * Sections are <li> elements with class "section" or "section main".
  */
 export function extractSectionsScript(): string {
-  return `
+  return wrapBrowserScript(`
 const sections = document.querySelectorAll('.section.main, li.section, .course-section');
 if (sections.length === 0) return [];
 return Array.from(sections).map(section => {
@@ -129,15 +137,15 @@ return Array.from(sections).map(section => {
     }).filter(m => m.name && m.url)
   };
 }).filter(s => s.modules.length > 0);
-`.trim()
+`)
 }
 
 /**
  * Extract resource details from a resource page (file, video, page, URL, folder).
  */
 export function extractResourceScript(): string {
-  return `
-const resource: Record<string, any> = { name: '', type: 'unknown', url: location.href };
+  return wrapBrowserScript(`
+const resource = { name: '', type: 'unknown', url: location.href };
 
 // page title
 const title = document.querySelector('h1, h2');
@@ -179,15 +187,15 @@ if (video) {
 }
 
 return resource;
-`.trim()
+`)
 }
 
 /**
  * Extract generic activity details from a Moodle activity page.
  */
 export function extractActivityDetailScript(): string {
-  return `
-const activity: Record<string, any> = {
+  return wrapBrowserScript(`
+const activity = {
   name: '',
   type: 'unknown',
   modId: 0,
@@ -235,5 +243,5 @@ for (const link of fileLinks) {
 if (files.length) activity.files = files.slice(0, 10);
 
 return activity;
-`.trim()
+`)
 }
