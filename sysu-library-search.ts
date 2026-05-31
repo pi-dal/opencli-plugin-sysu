@@ -11,7 +11,7 @@ import {
 cli({
   site: 'sysu',
   name: 'library-search',
-  description: 'SYSU Library literature search — one-stop search of print and electronic resources',
+  description: 'SYSU Library site search — search library.sysu.edu.cn pages and resources',
   access: 'read',
   domain: LIBRARY_DOMAIN,
   strategy: Strategy.COOKIE,

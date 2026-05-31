@@ -20,7 +20,8 @@ cli({
     { name: 'catalog-url-or-id', positional: true, required: true, help: 'INNOPAC detail URL or catalog record ID' }
   ],
   func: async (page: any, kwargs: any) => {
-    const input = String(kwargs.catalogUrlOrId)
+    const kw = kwargs.catalogUrlOrId || kwargs['catalog-url-or-id'] || ''
+    const input = String(kw)
     const detailUrl = buildCatalogDetailUrl(input)
 
     await page.goto(detailUrl)

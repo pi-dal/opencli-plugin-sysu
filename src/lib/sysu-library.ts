@@ -183,7 +183,7 @@ export function buildLiteratureSearchUrl(query: string): string {
  */
 export function extractSearchResultsScript(): string {
   return wrapBrowserScript(`
-const cards = document.querySelectorAll('.result-item, .search-result, .gs_r, .gsc-result, .entry, article, .item, .list-item');
+const cards = document.querySelectorAll('.node, .search-result, article, .views-row, .teaser');
 const results = [];
 const seen = new Set();
 
@@ -195,22 +195,16 @@ for (const card of cards) {
   if (!title || seen.has(title)) continue;
   seen.add(title);
 
-  const snippet = card.querySelector('.snippet, .abstract, .summary, .description, p')?.textContent?.trim() || undefined;
-  const author = card.querySelector('.author, .contributor, .source-info')?.textContent?.trim() || undefined;
-  const source = card.querySelector('.source, .publisher, .journal-title')?.textContent?.trim() || undefined;
-  const date = card.querySelector('.date, .year, .pub-date')?.textContent?.trim() || undefined;
+  const snippet = card.querySelector('.node-content, .content, .description, .field-content, p')?.textContent?.trim() || undefined;
 
   results.push({
     title,
     url: link.getAttribute('href') || '',
-    ...(snippet ? { snippet } : {}),
-    ...(author ? { author } : {}),
-    ...(source ? { source } : {}),
-    ...(date ? { date } : {})
+    ...(snippet ? { snippet: snippet.slice(0, 200) } : {})
   });
 }
 
-return results.slice(0, 30);
+return results.slice(0, 20);
 `)
 }
 

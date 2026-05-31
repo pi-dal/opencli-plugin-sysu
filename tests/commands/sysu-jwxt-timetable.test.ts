@@ -46,7 +46,7 @@ describe('sysu jwxt-timetable', () => {
     const result = await config.func(page, {})
 
     expect(page.evaluate).toHaveBeenCalledTimes(1)
-    const script = page.evaluate.mock.calls[0][0]
+    const script = (page.evaluate as any).mock.calls[0][0]
     expect(script).toContain('XMLHttpRequest')
     expect(result).toEqual([{ monday: '高等数学', section: 1, weekly: 13 }])
   })

@@ -323,14 +323,18 @@ const h1 = document.querySelector('h1');
 activity.name = h1?.textContent?.trim() || document.title;
 
 const bodyClass = document.body.className || '';
-if (bodyClass.includes('modtype_assign')) activity.type = 'assignment';
-else if (bodyClass.includes('modtype_quiz')) activity.type = 'quiz';
-else if (bodyClass.includes('modtype_forum')) activity.type = 'forum';
-else if (bodyClass.includes('modtype_resource')) activity.type = 'resource';
-else if (bodyClass.includes('modtype_page')) activity.type = 'page';
-else if (bodyClass.includes('modtype_url')) activity.type = 'url';
-else if (bodyClass.includes('modtype_folder')) activity.type = 'folder';
-else if (bodyClass.includes('modtype_fsresource')) activity.type = 'video';
+const pathName = location.pathname || '';
+const cm = new URLSearchParams(location.search).get('id');
+activity.modName = bodyClass.match(/modtype_(\w+)/)?.[1] || '';
+
+if (bodyClass.includes('modtype_assign') || pathName.includes('/mod/assign/')) activity.type = 'assignment';
+else if (bodyClass.includes('modtype_quiz') || pathName.includes('/mod/quiz/')) activity.type = 'quiz';
+else if (bodyClass.includes('modtype_forum') || pathName.includes('/mod/forum/')) activity.type = 'forum';
+else if (bodyClass.includes('modtype_resource') || pathName.includes('/mod/resource/')) activity.type = 'resource';
+else if (bodyClass.includes('modtype_page') || pathName.includes('/mod/page/')) activity.type = 'page';
+else if (bodyClass.includes('modtype_url') || pathName.includes('/mod/url/')) activity.type = 'url';
+else if (bodyClass.includes('modtype_folder') || pathName.includes('/mod/folder/')) activity.type = 'folder';
+else if (bodyClass.includes('modtype_fsresource') || pathName.includes('/mod/fsresource/')) activity.type = 'video';
 
 const urlMatch = location.href.match(/id=(\\d+)/);
 if (urlMatch) activity.modId = parseInt(urlMatch[1], 10);

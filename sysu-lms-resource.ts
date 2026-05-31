@@ -29,7 +29,8 @@ cli({
     { name: 'url-or-id', positional: true, required: true, help: 'Resource page URL or numeric resource ID' }
   ],
   func: async (page: any, kwargs: any) => {
-    const resourceUrl = resolveResourceUrl(String(kwargs.urlOrId))
+    const rawInput = kwargs.urlOrId || kwargs["url-or-id"] || ""
+    const resourceUrl = resolveResourceUrl(String(rawInput))
     await page.goto(resourceUrl)
     await page.evaluate(waitForContent())
     const info: MoodleResourceInfo = await page.evaluate(extractResourceScript())
