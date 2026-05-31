@@ -2,9 +2,19 @@ export const SYSU_DOMAIN = 'jwxt.sysu.edu.cn' as const
 
 export const SYSU_NAVIGATE_URLS = {
   classrooms:
-    'https://jwxt.sysu.edu.cn/jwxt/mk/schedule-web/#/classroomCheckStu?code=jwxsd_jsskqkjkxjscx&resourceName=%25E6%2595%2599%25E5%25AE%25A4%25E4%25B8%258A%25E8%25AF%25BE%25E6%2583%2585%25E5%2586%25B5%25E5%258F%258A%25E7%25A9%25BA%25E9%2597%25B2%25E6%2595%2599%25E5%25AE%25A4%25E6%259F%25A5%25E8%25AF%25A2',
+    'https://jwxt.sysu.edu.cn/jwxt/mk/schedule-web/#/classroomCheckStu?code=jwxsd_jsskqkjkxjscx&resourceName=%E6%95%99%E5%AE%A4%E4%B8%8A%E8%AF%BE%E6%83%85%E5%86%B5%E5%8F%8A%E7%A9%BA%E9%97%B2%E6%95%99%E5%AE%A4%E6%9F%A5%E8%AF%A2',
   courses:
-    'https://jwxt.sysu.edu.cn/jwxt/mk/#/openingCoursesStu?code=jwxsd_qxkckk&resourceName=%25E5%2585%25A8%25E6%25A0%25A1%25E5%25BC%2580%25E8%25AF%25BE%25E8%25AF%25BE%25E7%25A8%258B'
+    'https://jwxt.sysu.edu.cn/jwxt/mk/#/openingCoursesStu?code=jwxsd_qxkckk&resourceName=%E5%85%A8%E6%A0%A1%E5%BC%80%E8%AF%BE%E8%AF%BE%E7%A8%8B',
+  timetable:
+    'https://jwxt.sysu.edu.cn/jwxt/mk/#/studentCourseTable?code=jwxsd_xskb&resourceName=%E6%88%91%E7%9A%84%E8%AF%BE%E8%A1%A8',
+  grades:
+    'https://jwxt.sysu.edu.cn/jwxt/mk/#/stuAchievementView?code=jwxsd_cjcx&resourceName=%E6%88%90%E7%BB%A9%E6%9F%A5%E8%AF%A2',
+  exams:
+    'https://jwxt.sysu.edu.cn/jwxt/mk/#/examPresumably?code=jwxsd_ksap&resourceName=%E8%80%83%E8%AF%95%E5%AE%89%E6%8E%92',
+  trainingPlan:
+    'https://jwxt.sysu.edu.cn/jwxt/mk/#/programApply?code=jwxsd_pyfa&resourceName=%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88',
+  evaluation:
+    'https://jwxt.sysu.edu.cn/jwxt/mk/#/evaluationResultCheck?code=jwxsd_pgjg&resourceName=%E8%AF%84%E6%95%99%E7%BB%93%E6%9E%9C'
 } as const
 
 export const SYSU_ENDPOINTS = {
@@ -12,7 +22,13 @@ export const SYSU_ENDPOINTS = {
   classroomScheduleDetail: '/jwxt/schedule/agg/classroomOccupy/scheduleDetailCheck',
   classroomStudyObjects: '/jwxt/schedule/agg/classesStudyObj/list',
   classrooms: '/jwxt/schedule/agg/classroomOccupy/pageCheckList',
-  courses: '/jwxt/schedule/agg/schoolOpeningCoursesSchedule/querySchoolOpeningCourses'
+  courses: '/jwxt/schedule/agg/schoolOpeningCoursesSchedule/querySchoolOpeningCourses',
+  timetable: '/jwxt/schedule/agg/studentCourseTable/query',
+  grades: '/jwxt/score/agg/studentScore/query',
+  exams: '/jwxt/exam/agg/examArrange/query',
+  trainingPlan: '/jwxt/training/agg/trainingPlan/query',
+  evaluation: '/jwxt/evaluate/agg/evaluationResult/query',
+  elective: '/jwxt/elective/agg/electiveResult/query'
 } as const
 
 type CoursesRequestArgs = Record<string, unknown>
@@ -178,6 +194,25 @@ export function buildClassroomScheduleDetailEvaluateScript(request: {
     schedule,
     studyObjects
   }
+})()
+`.trim()
+}
+
+/**
+ * Build a generic POST query to a jwxt JSON API endpoint.
+ */
+export function buildJwxtQueryScript(endpoint: string, params?: Record<string, unknown>): string {
+  const body = params ? JSON.stringify({ param: params }) : '{}'
+  return `
+(async () => {
+  const response = await fetch(${JSON.stringify(endpoint)}, {
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/json' },
+    body: ${JSON.stringify(body)}
+  })
+  const data = await response.json()
+  return data?.data ?? data ?? []
 })()
 `.trim()
 }

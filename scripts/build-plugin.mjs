@@ -13,7 +13,13 @@ const commandEntries = [
   ['sysu-library-catalog.ts', 'sysu-library-catalog.js'],
   ['sysu-library-search.ts', 'sysu-library-search.js'],
   ['sysu-library-item.ts', 'sysu-library-item.js'],
-  ['sysu-lms-activity.ts', 'sysu-lms-activity.js']
+  ['sysu-lms-activity.ts', 'sysu-lms-activity.js'],
+  ['sysu-jwxt-timetable.ts', 'sysu-jwxt-timetable.js'],
+  ['sysu-jwxt-grades.ts', 'sysu-jwxt-grades.js'],
+  ['sysu-jwxt-exams.ts', 'sysu-jwxt-exams.js'],
+  ['sysu-jwxt-enrollment.ts', 'sysu-jwxt-enrollment.js'],
+  ['sysu-jwxt-training-plan.ts', 'sysu-jwxt-training-plan.js'],
+  ['sysu-jwxt-evaluation.ts', 'sysu-jwxt-evaluation.js']
 ]
 
 for (const [input, output] of commandEntries) {

@@ -21,7 +21,13 @@ const COMMAND_MODULES = [
   '../../sysu-library-databases.ts',
   '../../sysu-library-catalog.ts',
   '../../sysu-library-search.ts',
-  '../../sysu-library-item.ts'
+  '../../sysu-library-item.ts',
+  '../../sysu-jwxt-timetable.ts',
+  '../../sysu-jwxt-grades.ts',
+  '../../sysu-jwxt-exams.ts',
+  '../../sysu-jwxt-enrollment.ts',
+  '../../sysu-jwxt-training-plan.ts',
+  '../../sysu-jwxt-evaluation.ts'
 ]
 
 describe('sysu command output defaults', () => {
@@ -51,7 +57,13 @@ describe('sysu command output defaults', () => {
       ['sysu', 'library-databases', undefined],
       ['sysu', 'library-catalog', undefined],
       ['sysu', 'library-search', undefined],
-      ['sysu', 'library-item', undefined]
+      ['sysu', 'library-item', undefined],
+      ['sysu', 'jwxt-timetable', undefined],
+      ['sysu', 'jwxt-grades', undefined],
+      ['sysu', 'jwxt-exams', undefined],
+      ['sysu', 'jwxt-enrollment', undefined],
+      ['sysu', 'jwxt-training-plan', undefined],
+      ['sysu', 'jwxt-evaluation', undefined]
     ])
   })
 })

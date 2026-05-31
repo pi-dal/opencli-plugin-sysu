@@ -10,7 +10,13 @@ const PLUGIN_COMMAND_SOURCE_FILES = [
   'sysu-library-catalog.ts',
   'sysu-library-search.ts',
   'sysu-library-item.ts',
-  'sysu-lms-activity.ts'
+  'sysu-lms-activity.ts',
+  'sysu-jwxt-timetable.ts',
+  'sysu-jwxt-grades.ts',
+  'sysu-jwxt-exams.ts',
+  'sysu-jwxt-enrollment.ts',
+  'sysu-jwxt-training-plan.ts',
+  'sysu-jwxt-evaluation.ts'
 ] as const
 
 export function getPluginCommandSourceFiles(): string[] {

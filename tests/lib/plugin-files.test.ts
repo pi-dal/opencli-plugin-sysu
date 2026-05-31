@@ -19,7 +19,13 @@ describe('plugin runtime file selection', () => {
       'sysu-library-catalog.ts',
       'sysu-library-search.ts',
       'sysu-library-item.ts',
-      'sysu-lms-activity.ts'
+      'sysu-lms-activity.ts',
+      'sysu-jwxt-timetable.ts',
+      'sysu-jwxt-grades.ts',
+      'sysu-jwxt-exams.ts',
+      'sysu-jwxt-enrollment.ts',
+      'sysu-jwxt-training-plan.ts',
+      'sysu-jwxt-evaluation.ts'
     ])
   })
 
@@ -72,6 +78,30 @@ describe('plugin runtime file selection', () => {
       {
         input: 'sysu-lms-activity.ts',
         output: 'sysu-lms-activity.js'
+      },
+      {
+        input: 'sysu-jwxt-timetable.ts',
+        output: 'sysu-jwxt-timetable.js'
+      },
+      {
+        input: 'sysu-jwxt-grades.ts',
+        output: 'sysu-jwxt-grades.js'
+      },
+      {
+        input: 'sysu-jwxt-exams.ts',
+        output: 'sysu-jwxt-exams.js'
+      },
+      {
+        input: 'sysu-jwxt-enrollment.ts',
+        output: 'sysu-jwxt-enrollment.js'
+      },
+      {
+        input: 'sysu-jwxt-training-plan.ts',
+        output: 'sysu-jwxt-training-plan.js'
+      },
+      {
+        input: 'sysu-jwxt-evaluation.ts',
+        output: 'sysu-jwxt-evaluation.js'
       }
     ])
   })
