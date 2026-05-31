@@ -2,6 +2,7 @@ import { Strategy, cli } from '@jackwener/opencli/registry'
 
 import {
   LMS_DOMAIN,
+  extractCourseNameScript,
   extractSectionsScript,
   waitForContent,
   type MoodleSection
@@ -22,7 +23,8 @@ cli({
     const courseUrl = `https://${LMS_DOMAIN}/course/view.php?id=${courseId}`
     await page.goto(courseUrl)
     await page.evaluate(waitForContent())
+    const name: string = await page.evaluate(extractCourseNameScript())
     const sections: MoodleSection[] = await page.evaluate(extractSectionsScript())
-    return sections
+    return { name, sections }
   }
 })

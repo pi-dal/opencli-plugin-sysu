@@ -37,8 +37,17 @@ export interface MoodleResourceInfo {
 }
 
 /**
+ * Extract the course name from a Moodle course page heading.
+ */
+export function extractCourseNameScript(): string {
+  return `
+const h1 = document.querySelector('h1');
+return h1?.textContent?.trim() || document.title.replace(/\\s*\\|.*$/, '').trim() || '';
+`.trim()
+}
+
+/**
  * Wait for a Moodle page's main content region to be visible.
- * Common Moodle pages mount content inside #region-main or [role="main"].
  */
 export function waitForContent(): string {
   return `
@@ -140,6 +149,7 @@ if (bodyClass.includes('modtype_resource') || location.pathname.includes('/mod/r
 else if (bodyClass.includes('modtype_page') || location.pathname.includes('/mod/page/')) resource.type = 'page';
 else if (bodyClass.includes('modtype_url') || location.pathname.includes('/mod/url/')) resource.type = 'url';
 else if (bodyClass.includes('modtype_folder') || location.pathname.includes('/mod/folder/')) resource.type = 'folder';
+else if (bodyClass.includes('modtype_fsresource') || location.pathname.includes('/mod/fsresource/')) resource.type = 'video';
 
 // direct download link
 const downloadLink = document.querySelector('a[href*="pluginfile.php"]');

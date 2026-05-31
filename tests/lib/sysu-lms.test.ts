@@ -5,6 +5,7 @@ import {
   LMS_NAVIGATE_URLS,
   waitForContent,
   extractCoursesScript,
+  extractCourseNameScript,
   extractSectionsScript,
   extractResourceScript
 } from '../../src/lib/sysu-lms'
@@ -54,6 +55,14 @@ describe('extractCoursesScript', () => {
   })
 })
 
+describe('extractCourseNameScript', () => {
+  it('returns executable JS that extracts the page h1', () => {
+    const script = extractCourseNameScript()
+    expect(script).toContain('h1')
+    expect(script).toContain('document.title')
+  })
+})
+
 describe('extractSectionsScript', () => {
   it('returns executable JS string that extracts sections and modules', () => {
     const script = extractSectionsScript()
@@ -89,6 +98,8 @@ describe('extractResourceScript', () => {
     expect(script).toContain('modtype_page')
     expect(script).toContain('modtype_url')
     expect(script).toContain('modtype_folder')
+    expect(script).toContain('modtype_fsresource')
+    expect(script).toContain('/mod/fsresource/')
   })
 
   it('extracts download URL from pluginfile.php links', () => {

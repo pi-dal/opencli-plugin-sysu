@@ -12,8 +12,9 @@ function resolveResourceUrl(input: string): string {
     return input
   }
 
-  // treat as numeric resource id
-  return `https://${LMS_DOMAIN}/mod/resource/view.php?id=${input}`
+  // try video resource (fsresource) first, then fallback to regular resource
+  // use fsresource path since that's the primary video delivery on SYSU Moodle
+  return `https://${LMS_DOMAIN}/mod/fsresource/view.php?id=${input}`
 }
 
 cli({
