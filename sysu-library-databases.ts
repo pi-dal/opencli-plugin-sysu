@@ -12,6 +12,7 @@ cli({
   site: 'sysu',
   name: 'library-databases',
   description: 'SYSU Library database listing — browse/search subscribed databases',
+  access: 'read',
   defaultFormat: 'plain',
   domain: LIBRARY_DOMAIN,
   navigateBefore: LIBRARY_NAVIGATE_URLS.databases,

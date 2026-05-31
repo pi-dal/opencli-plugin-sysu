@@ -14,6 +14,7 @@ cli({
   site: 'sysu',
   name: 'lms-dashboard',
   description: 'SYSU Moodle dashboard — list enrolled courses',
+  access: 'read',
   defaultFormat: 'plain',
   domain: LMS_DOMAIN,
   navigateBefore: LMS_NAVIGATE_URLS.dashboard,

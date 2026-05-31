@@ -12,6 +12,7 @@ cli({
   site: 'sysu',
   name: 'lms-course',
   description: 'SYSU Moodle course — list sections and activities',
+  access: 'read',
   defaultFormat: 'plain',
   domain: LMS_DOMAIN,
   strategy: Strategy.COOKIE,

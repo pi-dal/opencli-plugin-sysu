@@ -27,6 +27,7 @@ cli({
   site: 'sysu',
   name: 'jwxt-classrooms',
   description: 'SYSU classroom occupancy query',
+  access: 'read',
   defaultFormat: 'plain',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.classrooms,

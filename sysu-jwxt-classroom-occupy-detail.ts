@@ -12,6 +12,7 @@ cli({
   site: 'sysu',
   name: 'jwxt-classroom-occupy-detail',
   description: 'SYSU classroom occupancy detail',
+  access: 'read',
   defaultFormat: 'plain',
   domain: SYSU_DOMAIN,
   navigateBefore: SYSU_NAVIGATE_URLS.classrooms,
