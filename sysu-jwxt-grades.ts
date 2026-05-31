@@ -4,7 +4,7 @@ import {
   SYSU_DOMAIN,
   SYSU_NAVIGATE_URLS,
   SYSU_ENDPOINTS,
-  buildJwxtQueryScript
+  buildJwxtGetScript
 } from './src/lib/api'
 
 cli({
@@ -17,12 +17,12 @@ cli({
   strategy: Strategy.COOKIE,
   browser: true,
   args: [
-    { name: 'year-term', help: 'Academic year term, e.g. 2025-2' }
+    { name: 'semester', help: 'Semester code, e.g. 2025-2' }
   ],
   func: async (page: any, kwargs: any) => {
-    const params: Record<string, unknown> = {}
-    if (kwargs.yearTerm) params.yearTerm = kwargs.yearTerm
-    const script = buildJwxtQueryScript(SYSU_ENDPOINTS.grades, params)
+    const params: Record<string, string> = {}
+    if (kwargs.semester) params.semester = String(kwargs.semester)
+    const script = buildJwxtGetScript(SYSU_ENDPOINTS.grades, params)
     const data = await page.evaluate(script)
     return Array.isArray(data) ? data : (data?.rows ?? data?.data ?? [])
   }

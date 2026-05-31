@@ -24,10 +24,7 @@ const COMMAND_MODULES = [
   '../../sysu-library-item.ts',
   '../../sysu-jwxt-timetable.ts',
   '../../sysu-jwxt-grades.ts',
-  '../../sysu-jwxt-exams.ts',
-  '../../sysu-jwxt-enrollment.ts',
-  '../../sysu-jwxt-training-plan.ts',
-  '../../sysu-jwxt-evaluation.ts'
+  '../../sysu-jwxt-notifications.ts'
 ]
 
 describe('sysu command output defaults', () => {
@@ -60,10 +57,7 @@ describe('sysu command output defaults', () => {
       ['sysu', 'library-item', undefined],
       ['sysu', 'jwxt-timetable', undefined],
       ['sysu', 'jwxt-grades', undefined],
-      ['sysu', 'jwxt-exams', undefined],
-      ['sysu', 'jwxt-enrollment', undefined],
-      ['sysu', 'jwxt-training-plan', undefined],
-      ['sysu', 'jwxt-evaluation', undefined]
+      ['sysu', 'jwxt-notifications', undefined]
     ])
   })
 })

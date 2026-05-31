@@ -23,12 +23,9 @@ export const SYSU_ENDPOINTS = {
   classroomStudyObjects: '/jwxt/schedule/agg/classesStudyObj/list',
   classrooms: '/jwxt/schedule/agg/classroomOccupy/pageCheckList',
   courses: '/jwxt/schedule/agg/schoolOpeningCoursesSchedule/querySchoolOpeningCourses',
-  timetable: '/jwxt/schedule/agg/studentCourseTable/query',
-  grades: '/jwxt/score/agg/studentScore/query',
-  exams: '/jwxt/exam/agg/examArrange/query',
-  trainingPlan: '/jwxt/training/agg/trainingPlan/query',
-  evaluation: '/jwxt/evaluate/agg/evaluationResult/query',
-  elective: '/jwxt/elective/agg/electiveResult/query'
+  timetable: '/jwxt/timetable-search/classTableInfo/selectStudentClassTable',
+  grades: '/jwxt/achievement-manage/score-check/listV2',
+  notifications: '/jwxt/system-manage/info-delivery'
 } as const
 
 type CoursesRequestArgs = Record<string, unknown>
@@ -199,17 +196,15 @@ export function buildClassroomScheduleDetailEvaluateScript(request: {
 }
 
 /**
- * Build a generic POST query to a jwxt JSON API endpoint.
+ * Build a GET query to a jwxt endpoint with query parameters.
+ * jwxt data APIs use GET with query params, not POST.
  */
-export function buildJwxtQueryScript(endpoint: string, params?: Record<string, unknown>): string {
-  const body = params ? JSON.stringify({ param: params }) : '{}'
+export function buildJwxtGetScript(endpoint: string, params?: Record<string, string>): string {
+  const search = params ? '?' + new URLSearchParams(params).toString() : ''
   return `
 (async () => {
-  const response = await fetch(${JSON.stringify(endpoint)}, {
-    method: 'POST',
-    credentials: 'include',
-    headers: { 'Content-Type': 'application/json' },
-    body: ${JSON.stringify(body)}
+  const response = await fetch(${JSON.stringify(endpoint + search)}, {
+    credentials: 'include'
   })
   const data = await response.json()
   return data?.data ?? data ?? []
