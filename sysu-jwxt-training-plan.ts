@@ -17,11 +17,15 @@ cli({
     { name: 'year', help: 'Grade year, e.g. 2021' },
     { name: 'college', help: 'College/department name' }
   ],
-  func: async (page: any, _kwargs: any) => {
+  func: async (page: any, kwargs: any) => {
+    const collegeFilter = kwargs.college ? String(kwargs.college).toLowerCase() : '';
+    const yearFilter = kwargs.year ? String(kwargs.year) : '';
     await new Promise(r => setTimeout(r, 3000))
 
     const data = await page.evaluate(`
 (async () => {
+  const collegeFilter = ${JSON.stringify(collegeFilter)};
+  const yearFilter = ${JSON.stringify(yearFilter)};
   const deadline = Date.now() + 10000;
   const seen = new Set();
 
@@ -41,7 +45,16 @@ cli({
         return Array.from(cells).map(function(c) { return (c.textContent || '').trim(); });
       }).filter(function(r) { return r.length >= 5; });
 
-      if (rows.length > 0) return { headers: headers.length > 0 ? headers : [], rows: rows.slice(0, 100), total: rows.length };
+      if (rows.length > 0) {
+        let filtered = rows;
+        if (collegeFilter) {
+          filtered = filtered.filter(function(r) { return r.some(function(c) { return c.toLowerCase().includes(collegeFilter); }); });
+        }
+        if (yearFilter) {
+          filtered = filtered.filter(function(r) { return r.some(function(c) { return c.includes(yearFilter); }); });
+        }
+        return { headers: headers.length > 0 ? headers : [], rows: filtered.slice(0, 100), total: filtered.length };
+      }
     }
 
     // Check raw text for data patterns
