@@ -181,3 +181,59 @@ if (video) {
 return resource;
 `.trim()
 }
+
+/**
+ * Extract generic activity details from a Moodle activity page.
+ */
+export function extractActivityDetailScript(): string {
+  return `
+const activity: Record<string, any> = {
+  name: '',
+  type: 'unknown',
+  modId: 0,
+  url: location.href
+};
+
+const h1 = document.querySelector('h1');
+activity.name = h1?.textContent?.trim() || document.title;
+
+const bodyClass = document.body.className || '';
+if (bodyClass.includes('modtype_assign')) activity.type = 'assignment';
+else if (bodyClass.includes('modtype_quiz')) activity.type = 'quiz';
+else if (bodyClass.includes('modtype_forum')) activity.type = 'forum';
+else if (bodyClass.includes('modtype_resource')) activity.type = 'resource';
+else if (bodyClass.includes('modtype_page')) activity.type = 'page';
+else if (bodyClass.includes('modtype_url')) activity.type = 'url';
+else if (bodyClass.includes('modtype_folder')) activity.type = 'folder';
+else if (bodyClass.includes('modtype_fsresource')) activity.type = 'video';
+
+const urlMatch = location.href.match(/id=(\\d+)/);
+if (urlMatch) activity.modId = parseInt(urlMatch[1], 10);
+
+const courseLink = document.querySelector('a[href*="/course/view.php?id="]');
+activity.courseId = courseLink?.href.match(/id=(\\d+)/)?.[1] || undefined;
+
+const descEl = document.querySelector('[role="main"] .description, #region-main .description, .activity-description, .no-overflow');
+activity.description = descEl?.textContent?.trim().slice(0, 500) || undefined;
+
+const contentEl = document.querySelector('[role="main"], #region-main, #page-content');
+activity.content = contentEl?.textContent?.trim().slice(0, 1000) || undefined;
+
+const loginForm = document.querySelector('#loginform, .login-form, input[name="logintoken"]');
+if (loginForm) activity.requiresLogin = true;
+
+const files = [];
+const fileLinks = document.querySelectorAll('a[href*="pluginfile.php"], a[href*="mod_resource/content"]');
+for (const link of fileLinks) {
+  const name = (link.textContent || '').trim() || 'file';
+  if (!name) continue;
+  files.push({
+    name,
+    url: link.getAttribute('href') || ''
+  });
+}
+if (files.length) activity.files = files.slice(0, 10);
+
+return activity;
+`.trim()
+}

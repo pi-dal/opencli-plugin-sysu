@@ -7,7 +7,8 @@ import {
   extractCoursesScript,
   extractCourseNameScript,
   extractSectionsScript,
-  extractResourceScript
+  extractResourceScript,
+  extractActivityDetailScript
 } from '../../src/lib/sysu-lms'
 
 describe('LMS_DOMAIN', () => {
@@ -120,5 +121,20 @@ describe('extractResourceScript', () => {
     expect(script).toContain('video.getAttribute')
     expect(script).toContain('source')
     expect(script).toContain('downloadUrl')
+  })
+})
+
+describe('extractActivityDetailScript', () => {
+  it('returns generic activity extraction script without assignment/quiz-specific fields', () => {
+    const script = extractActivityDetailScript()
+    expect(script).toContain('modtype_assign')
+    expect(script).toContain('modtype_quiz')
+    expect(script).toContain('modtype_forum')
+    expect(script).toContain('modtype_fsresource')
+    expect(script).toContain('description')
+    expect(script).toContain('pluginfile.php')
+    // no assignment/quiz-specific sub-objects
+    expect(script).not.toContain('submission')
+    expect(script).not.toContain('dueDate')
   })
 })

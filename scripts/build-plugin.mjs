@@ -10,7 +10,10 @@ const commandEntries = [
   ['sysu-lms-course.ts', 'sysu-lms-course.js'],
   ['sysu-lms-resource.ts', 'sysu-lms-resource.js'],
   ['sysu-library-databases.ts', 'sysu-library-databases.js'],
-  ['sysu-library-catalog.ts', 'sysu-library-catalog.js']
+  ['sysu-library-catalog.ts', 'sysu-library-catalog.js'],
+  ['sysu-library-search.ts', 'sysu-library-search.js'],
+  ['sysu-library-item.ts', 'sysu-library-item.js'],
+  ['sysu-lms-activity.ts', 'sysu-lms-activity.js']
 ]
 
 for (const [input, output] of commandEntries) {

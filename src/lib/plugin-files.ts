@@ -7,7 +7,10 @@ const PLUGIN_COMMAND_SOURCE_FILES = [
   'sysu-lms-course.ts',
   'sysu-lms-resource.ts',
   'sysu-library-databases.ts',
-  'sysu-library-catalog.ts'
+  'sysu-library-catalog.ts',
+  'sysu-library-search.ts',
+  'sysu-library-item.ts',
+  'sysu-lms-activity.ts'
 ] as const
 
 export function getPluginCommandSourceFiles(): string[] {

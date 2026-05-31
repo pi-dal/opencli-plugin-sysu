@@ -6,7 +6,10 @@ import {
   waitForLibraryContent,
   extractDatabasesScript,
   extractCatalogResultsScript,
+  extractSearchResultsScript,
+  extractCatalogItemDetailScript,
   buildCatalogSearchUrl,
+  buildCatalogDetailUrl,
   buildLiteratureSearchUrl
 } from '../../src/lib/sysu-library'
 
@@ -68,5 +71,39 @@ describe('buildCatalogSearchUrl', () => {
     const url = buildCatalogSearchUrl({ query: 'Turing', type: 'author' })
     expect(url).toContain('find_code=AWRD')
     expect(url).toContain('request=Turing')
+  })
+})
+
+describe('extractSearchResultsScript', () => {
+  it('returns a search results extraction script', () => {
+    const script = extractSearchResultsScript()
+    expect(script).toContain('querySelectorAll')
+    expect(script).toContain('title')
+    expect(script).toContain('url')
+    expect(script.length).toBeGreaterThan(100)
+  })
+})
+
+describe('extractCatalogItemDetailScript', () => {
+  it('returns a catalog item detail extraction script', () => {
+    const script = extractCatalogItemDetailScript()
+    expect(script).toContain('getLabel')
+    expect(script).toContain('title')
+    expect(script).toContain('callNumber')
+    expect(script).toContain('status')
+  })
+})
+
+describe('buildCatalogDetailUrl', () => {
+  it('passes through full URLs', () => {
+    const url = buildCatalogDetailUrl('http://10.8.11.130:8991/F/-?func=full-set&set=1')
+    expect(url).toBe('http://10.8.11.130:8991/F/-?func=full-set&set=1')
+  })
+
+  it('wraps numeric IDs into INNOPAC detail URLs', () => {
+    const url = buildCatalogDetailUrl('12345')
+    expect(url).toContain('/F/-?func=full-set-set')
+    expect(url).toContain('set_number=12345')
+    expect(url).toContain('format=999')
   })
 })

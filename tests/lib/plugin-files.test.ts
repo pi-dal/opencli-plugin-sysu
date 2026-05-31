@@ -16,7 +16,10 @@ describe('plugin runtime file selection', () => {
       'sysu-lms-course.ts',
       'sysu-lms-resource.ts',
       'sysu-library-databases.ts',
-      'sysu-library-catalog.ts'
+      'sysu-library-catalog.ts',
+      'sysu-library-search.ts',
+      'sysu-library-item.ts',
+      'sysu-lms-activity.ts'
     ])
   })
 
@@ -57,6 +60,18 @@ describe('plugin runtime file selection', () => {
       {
         input: 'sysu-library-catalog.ts',
         output: 'sysu-library-catalog.js'
+      },
+      {
+        input: 'sysu-library-search.ts',
+        output: 'sysu-library-search.js'
+      },
+      {
+        input: 'sysu-library-item.ts',
+        output: 'sysu-library-item.js'
+      },
+      {
+        input: 'sysu-lms-activity.ts',
+        output: 'sysu-lms-activity.js'
       }
     ])
   })

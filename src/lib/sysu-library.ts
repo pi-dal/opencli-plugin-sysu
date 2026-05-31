@@ -25,6 +25,29 @@ export interface CatalogRecord {
   url: string
 }
 
+export interface SearchResult {
+  title: string
+  url: string
+  snippet?: string
+  author?: string
+  source?: string
+  date?: string
+}
+
+export interface CatalogItemDetail {
+  title: string
+  author?: string
+  isbn?: string
+  callNumber?: string
+  publisher?: string
+  year?: string
+  subjects?: string[]
+  summary?: string
+  location?: string
+  status?: string
+  url: string
+}
+
 export interface CatalogSearchArgs {
   query: string
   type?: 'title' | 'author' | 'subject' | 'isbn' | 'all'
@@ -145,4 +168,100 @@ export function buildCatalogSearchUrl(args: CatalogSearchArgs): string {
  */
 export function buildLiteratureSearchUrl(query: string): string {
   return `https://${LIBRARY_DOMAIN}/search?q=${encodeURIComponent(query)}`
+}
+
+/**
+ * Extract search results from the library literature search results page.
+ */
+export function extractSearchResultsScript(): string {
+  return `
+const cards = document.querySelectorAll('.result-item, .search-result, .gs_r, .gsc-result, .entry, article, .item, .list-item');
+const results = [];
+const seen = new Set();
+
+for (const card of cards) {
+  const link = card.querySelector('a[href]');
+  if (!link) continue;
+
+  const title = (link.textContent || '').trim();
+  if (!title || seen.has(title)) continue;
+  seen.add(title);
+
+  const snippet = card.querySelector('.snippet, .abstract, .summary, .description, p')?.textContent?.trim() || undefined;
+  const author = card.querySelector('.author, .contributor, .source-info')?.textContent?.trim() || undefined;
+  const source = card.querySelector('.source, .publisher, .journal-title')?.textContent?.trim() || undefined;
+  const date = card.querySelector('.date, .year, .pub-date')?.textContent?.trim() || undefined;
+
+  results.push({
+    title,
+    url: link.getAttribute('href') || '',
+    ...(snippet ? { snippet } : {}),
+    ...(author ? { author } : {}),
+    ...(source ? { source } : {}),
+    ...(date ? { date } : {})
+  });
+}
+
+return results.slice(0, 30);
+`.trim()
+}
+
+/**
+ * Extract catalog item detail from an INNOPAC full record page.
+ */
+export function extractCatalogItemDetailScript(): string {
+  return `
+function getLabel(prefix) {
+  const texts = document.body.innerText || '';
+  const lines = texts.split('\\n');
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].trim().startsWith(prefix)) {
+      return lines[i].replace(prefix, '').trim();
+    }
+  }
+  return undefined;
+}
+
+const title = document.querySelector('h1, h2, .bib-title, [class*="title"]')?.textContent?.trim() || document.title;
+
+const author = getLabel('Author:') || getLabel('作者:');
+const isbn = getLabel('ISBN:');
+const publisher = getLabel('Publisher:') || getLabel('出版:');
+const year = getLabel('Year:') || getLabel('年份:');
+const callNumber = getLabel('Call #:') || getLabel('索书号:') || getLabel('Call No:');
+const location = getLabel('Location:') || getLabel('馆藏地:');
+const status = getLabel('Status:') || getLabel('状态:');
+
+const subjects = [];
+for (const subj of ['Subject:', '主题:', 'Subjects:', 'Topic:']) {
+  const val = getLabel(subj);
+  if (val) subjects.push(val);
+}
+
+const summary = getLabel('Summary:') || getLabel('摘要:') || getLabel('Description:');
+
+return {
+  title,
+  url: location.href,
+  ...(author ? { author } : {}),
+  ...(isbn ? { isbn } : {}),
+  ...(callNumber ? { callNumber } : {}),
+  ...(publisher ? { publisher } : {}),
+  ...(year ? { year } : {}),
+  ...(subjects.length ? { subjects } : {}),
+  ...(summary ? { summary } : {}),
+  ...(location ? { location } : {}),
+  ...(status ? { status } : {})
+};
+`.trim()
+}
+
+/**
+ * Build an INNOPAC full record URL from a catalog record ID.
+ */
+export function buildCatalogDetailUrl(id: string): string {
+  if (id.startsWith('http://') || id.startsWith('https://')) {
+    return id
+  }
+  return `http://10.8.11.130:8991/F/-?func=full-set-set&set_number=${encodeURIComponent(id)}&format=999`
 }
