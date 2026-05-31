@@ -15,7 +15,7 @@ describe('sysu jwxt-notifications', () => {
     vi.resetModules()
   })
 
-  it('registers the sysu jwxt-notifications command with cookie strategy', async () => {
+  it('registers the sysu jwxt-notifications command', async () => {
     await import('../../sysu-jwxt-notifications.ts')
 
     expect(cliMock).toHaveBeenCalledTimes(1)
@@ -29,20 +29,56 @@ describe('sysu jwxt-notifications', () => {
     expect(config.browser).toBe(true)
   })
 
-  it('returns notification data from the API', async () => {
+  it('flattens college and education into flat list with category', async () => {
     await import('../../sysu-jwxt-notifications.ts')
 
     const config = cliMock.mock.calls[0][0]
-    const notifData = {
-      college: [{ title: '2026年毕业论文通知', publishTime: '2026-05-01' }]
-    }
+    const mockData = [
+      { id: '1', title: '教务部通知', date: '2026-05-01', category: 'education' },
+      { id: '2', title: '学院通知', date: '2026-05-02', category: 'college' }
+    ]
     const page = {
-      evaluate: vi.fn(async () => notifData)
+      evaluate: vi.fn(async () => mockData)
     }
 
     const result = await config.func(page, {})
 
-    expect(page.evaluate).toHaveBeenCalled()
-    expect(result).toEqual(notifData)
+    expect(result).toHaveLength(2)
+    expect(result[0].category).toBe('education')
+    expect(result[1].category).toBe('college')
+  })
+
+  it('filters by category', async () => {
+    await import('../../sysu-jwxt-notifications.ts')
+
+    const config = cliMock.mock.calls[0][0]
+    const page = {
+      evaluate: vi.fn(async () => [
+        { id: '1', title: 'A', category: 'education' },
+        { id: '2', title: 'B', category: 'college' }
+      ])
+    }
+
+    const result = await config.func(page, { category: 'college' })
+
+    expect(result).toHaveLength(1)
+    expect(result[0].category).toBe('college')
+  })
+
+  it('filters by keyword in title', async () => {
+    await import('../../sysu-jwxt-notifications.ts')
+
+    const config = cliMock.mock.calls[0][0]
+    const page = {
+      evaluate: vi.fn(async () => [
+        { id: '1', title: '图像采集通知', category: 'education' },
+        { id: '2', title: '学位授予通知', category: 'college' }
+      ])
+    }
+
+    const result = await config.func(page, { keyword: '学位' })
+
+    expect(result).toHaveLength(1)
+    expect(result[0].title).toContain('学位')
   })
 })
