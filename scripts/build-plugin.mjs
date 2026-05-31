@@ -4,7 +4,6 @@ import { build } from 'esbuild'
 const commandEntries = [
   ['sysu-jwxt-courses.ts', 'sysu-jwxt-courses.js'],
   ['sysu-jwxt-classrooms.ts', 'sysu-jwxt-classrooms.js'],
-  ['sysu-jwxt-classroom-occupy-detail.ts', 'sysu-jwxt-classroom-occupy-detail.js'],
   ['sysu-jwxt-classroom-schedule-detail.ts', 'sysu-jwxt-classroom-schedule-detail.js'],
   ['sysu-lms-dashboard.ts', 'sysu-lms-dashboard.js'],
   ['sysu-lms-course.ts', 'sysu-lms-course.js'],

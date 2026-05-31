@@ -10,7 +10,6 @@ describe('plugin runtime file selection', () => {
     expect(getPluginCommandSourceFiles()).toEqual([
       'sysu-jwxt-courses.ts',
       'sysu-jwxt-classrooms.ts',
-      'sysu-jwxt-classroom-occupy-detail.ts',
       'sysu-jwxt-classroom-schedule-detail.ts',
       'sysu-lms-dashboard.ts',
       'sysu-lms-course.ts',
@@ -34,10 +33,6 @@ describe('plugin runtime file selection', () => {
       {
         input: 'sysu-jwxt-classrooms.ts',
         output: 'sysu-jwxt-classrooms.js'
-      },
-      {
-        input: 'sysu-jwxt-classroom-occupy-detail.ts',
-        output: 'sysu-jwxt-classroom-occupy-detail.js'
       },
       {
         input: 'sysu-jwxt-classroom-schedule-detail.ts',

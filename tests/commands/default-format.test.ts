@@ -12,7 +12,6 @@ vi.mock('@jackwener/opencli/registry', () => ({
 const COMMAND_MODULES = [
   '../../sysu-jwxt-courses.ts',
   '../../sysu-jwxt-classrooms.ts',
-  '../../sysu-jwxt-classroom-occupy-detail.ts',
   '../../sysu-jwxt-classroom-schedule-detail.ts',
   '../../sysu-lms-dashboard.ts',
   '../../sysu-lms-course.ts',
@@ -44,7 +43,6 @@ describe('sysu command output defaults', () => {
     expect(configs.map(config => [config.site, config.name, config.defaultFormat])).toEqual([
       ['sysu', 'jwxt-courses', undefined],
       ['sysu', 'jwxt-classrooms', undefined],
-      ['sysu', 'jwxt-classroom-occupy-detail', undefined],
       ['sysu', 'jwxt-classroom-schedule-detail', undefined],
       ['sysu', 'lms-dashboard', undefined],
       ['sysu', 'lms-course', undefined],

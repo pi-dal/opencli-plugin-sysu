@@ -1,7 +1,6 @@
 const PLUGIN_COMMAND_SOURCE_FILES = [
   'sysu-jwxt-courses.ts',
   'sysu-jwxt-classrooms.ts',
-  'sysu-jwxt-classroom-occupy-detail.ts',
   'sysu-jwxt-classroom-schedule-detail.ts',
   'sysu-lms-dashboard.ts',
   'sysu-lms-course.ts',

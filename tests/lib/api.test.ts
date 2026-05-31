@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest'
 
 import {
   SYSU_ENDPOINTS,
-  buildClassroomOccupyDetailRequest,
   buildClassroomScheduleDetailRequest,
   buildClassroomsRequest,
   buildCoursesRequest
@@ -81,15 +80,6 @@ describe('buildClassroomsRequest', () => {
 })
 
 describe('detail request builders', () => {
-  it('creates the occupancy detail request', () => {
-    expect(buildClassroomOccupyDetailRequest('OCC-1')).toEqual({
-      endpoint: SYSU_ENDPOINTS.classroomOccupyDetail,
-      params: {
-        id: 'OCC-1'
-      }
-    })
-  })
-
   it('creates the schedule detail request', () => {
     expect(
       buildClassroomScheduleDetailRequest({

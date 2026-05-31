@@ -18,7 +18,6 @@ export const SYSU_NAVIGATE_URLS = {
 } as const
 
 export const SYSU_ENDPOINTS = {
-  classroomOccupyDetail: '/jwxt/schedule/agg/classroomOccupy/detail',
   classroomScheduleDetail: '/jwxt/schedule/agg/classroomOccupy/scheduleDetailCheck',
   classroomStudyObjects: '/jwxt/schedule/agg/classesStudyObj/list',
   classrooms: '/jwxt/schedule/agg/classroomOccupy/pageCheckList',
@@ -95,13 +94,6 @@ export function buildClassroomsRequest(args: ClassroomsRequestArgs) {
       total: true
     },
     endpoint: SYSU_ENDPOINTS.classrooms
-  }
-}
-
-export function buildClassroomOccupyDetailRequest(id: string) {
-  return {
-    endpoint: SYSU_ENDPOINTS.classroomOccupyDetail,
-    params: { id }
   }
 }
 
