@@ -140,7 +140,7 @@ for (const row of rows) {
     url: titleLink.getAttribute('href') || '',
     ...(author ? { author } : {}),
     ...(callNo ? { callNumber: callNo } : {}),
-    ...(location ? { location } : {}),
+    ...(itemLocation ? { location: itemLocation } : {}),
     ...(status ? { status } : {})
   });
   count++;
@@ -231,7 +231,7 @@ const isbn = getLabel('ISBN:');
 const publisher = getLabel('Publisher:') || getLabel('出版:');
 const year = getLabel('Year:') || getLabel('年份:');
 const callNumber = getLabel('Call #:') || getLabel('索书号:') || getLabel('Call No:');
-const location = getLabel('Location:') || getLabel('馆藏地:');
+const itemLocation = getLabel('Location:') || getLabel('馆藏地:');
 const status = getLabel('Status:') || getLabel('状态:');
 
 const subjects = [];
@@ -244,7 +244,7 @@ const summary = getLabel('Summary:') || getLabel('摘要:') || getLabel('Descrip
 
 return {
   title,
-  url: location.href,
+  url: window.location.href,
   ...(author ? { author } : {}),
   ...(isbn ? { isbn } : {}),
   ...(callNumber ? { callNumber } : {}),
@@ -252,7 +252,7 @@ return {
   ...(year ? { year } : {}),
   ...(subjects.length ? { subjects } : {}),
   ...(summary ? { summary } : {}),
-  ...(location ? { location } : {}),
+  ...(itemLocation ? { location: itemLocation } : {}),
   ...(status ? { status } : {})
 };
 `)
