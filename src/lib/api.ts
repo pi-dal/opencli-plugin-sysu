@@ -9,12 +9,6 @@ export const SYSU_NAVIGATE_URLS = {
     'https://jwxt.sysu.edu.cn/jwxt/mk/#/studentCourseTable?code=jwxsd_xskb&resourceName=%E6%88%91%E7%9A%84%E8%AF%BE%E8%A1%A8',
   grades:
     'https://jwxt.sysu.edu.cn/jwxt/mk/#/stuAchievementView?code=jwxsd_cjcx&resourceName=%E6%88%90%E7%BB%A9%E6%9F%A5%E8%AF%A2',
-  exams:
-    'https://jwxt.sysu.edu.cn/jwxt/mk/#/examPresumably?code=jwxsd_ksap&resourceName=%E8%80%83%E8%AF%95%E5%AE%89%E6%8E%92',
-  trainingPlan:
-    'https://jwxt.sysu.edu.cn/jwxt/mk/#/programApply?code=jwxsd_pyfa&resourceName=%E5%9F%B9%E5%85%BB%E6%96%B9%E6%A1%88',
-  evaluation:
-    'https://jwxt.sysu.edu.cn/jwxt/mk/#/evaluationResultCheck?code=jwxsd_pgjg&resourceName=%E8%AF%84%E6%95%99%E7%BB%93%E6%9E%9C'
 } as const
 
 export const SYSU_ENDPOINTS = {
