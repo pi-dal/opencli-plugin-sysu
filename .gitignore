@@ -35,3 +35,6 @@ npm-debug.log*
 *.js
 !scripts/*.mjs
 !scripts/*.js
+
+# Local agent config
+.agents/
