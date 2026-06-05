@@ -61,13 +61,13 @@ This skill spans multiple SYSU systems:
   ```bash
   opencli sysu library-catalog <query> [--limit <limit>]
   ```
-  *Example*: `opencli sysu sysu-library-catalog "algorithm design" --limit 5`
+  *Example*: `opencli sysu library-catalog "algorithm design" --limit 5`
 
 - View specific book status and locations:
   ```bash
   opencli sysu library-item <record-id>
   ```
-  *Example*: `opencli sysu sysu-library-item 123456`
+  *Example*: `opencli sysu library-item 123456`
 
 - List library databases:
   ```bash
