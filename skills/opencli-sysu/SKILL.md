@@ -28,72 +28,72 @@ This skill spans multiple SYSU systems:
 
 - Find empty classrooms:
   ```bash
-  opencli sysu sysu-jwxt-classrooms --campus <campus> [--building <building>] [--week <week>] [--day <day>]
+  opencli sysu jwxt-classrooms --campus <campus> [--building <building>] [--week <week>] [--day <day>]
   ```
-  *Example*: `opencli sysu sysu-jwxt-classrooms --campus 东校园 --building 教学楼`
+  *Example*: `opencli sysu jwxt-classrooms --campus 东校园 --building 教学楼`
 
 - View classroom schedule details:
   ```bash
-  opencli sysu sysu-jwxt-classroom-schedule-detail --room <room> [--week <week>]
+  opencli sysu jwxt-classroom-schedule-detail --room <room> [--week <week>]
   ```
-  *Example*: `opencli sysu sysu-jwxt-classroom-schedule-detail --room "教学楼B201"`
+  *Example*: `opencli sysu jwxt-classroom-schedule-detail --room "教学楼B201"`
 
 - View class timetable:
   ```bash
-  opencli sysu sysu-jwxt-timetable [--semester <semester>]
+  opencli sysu jwxt-timetable [--semester <semester>]
   ```
 
 - View course grades:
   ```bash
-  opencli sysu sysu-jwxt-grades [--semester <semester>]
+  opencli sysu jwxt-grades [--semester <semester>]
   ```
 
 - View courses & training plans:
   ```bash
-  opencli sysu sysu-jwxt-courses
-  opencli sysu sysu-jwxt-training-plan
-  opencli sysu sysu-jwxt-notifications
+  opencli sysu jwxt-courses
+  opencli sysu jwxt-training-plan
+  opencli sysu jwxt-notifications
   ```
 
 ### Library Operations
 
 - Search library books:
   ```bash
-  opencli sysu sysu-library-catalog <query> [--limit <limit>]
+  opencli sysu library-catalog <query> [--limit <limit>]
   ```
   *Example*: `opencli sysu sysu-library-catalog "algorithm design" --limit 5`
 
 - View specific book status and locations:
   ```bash
-  opencli sysu sysu-library-item <record-id>
+  opencli sysu library-item <record-id>
   ```
   *Example*: `opencli sysu sysu-library-item 123456`
 
 - List library databases:
   ```bash
-  opencli sysu sysu-library-databases [query]
+  opencli sysu library-databases [query]
   ```
 
 ### Moodle LMS Operations
 
 - View dashboard (active courses and deadlines):
   ```bash
-  opencli sysu sysu-lms-dashboard
+  opencli sysu lms-dashboard
   ```
 
 - List course assignments and activities:
   ```bash
-  opencli sysu sysu-lms-activity <course-id>
+  opencli sysu lms-activity <course-id>
   ```
 
 - List course files and folders:
   ```bash
-  opencli sysu sysu-lms-resource <course-id>
+  opencli sysu lms-resource <course-id>
   ```
 
 - Show details of a course:
   ```bash
-  opencli sysu sysu-lms-course <course-id>
+  opencli sysu lms-course <course-id>
   ```
 
 ## Best practices & limitations
